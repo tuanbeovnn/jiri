@@ -23,10 +23,7 @@ import { GET_ALL_PROJECT_CATEGORY_SAGA } from '../../../redux/constants/Cyberbug
 
     const dispatch = useDispatch();
 
-    const submitForm = (e) => {
-        e.preventDefault();
-        alert('submit edit');
-    }
+    
     //componentdidmount
     useEffect(() => {
         dispatch({
@@ -42,7 +39,7 @@ import { GET_ALL_PROJECT_CATEGORY_SAGA } from '../../../redux/constants/Cyberbug
     const   {arrayProjectCategory} = useSelector(state => state.ProjectCategoryReducer); 
 
     return (
-        <form className="container-fuild" onSubmit={submitForm}>
+        <form className="container-fuild" onSubmit={handleSubmit}>
             <div className="row">
                 <div className="col-4">
                     <div className="form-group">
@@ -130,8 +127,8 @@ const editProjectForm = withFormik({
 })(FormEditProject);
 
 const mapStateToProps = (state) => ({
-projectEdit : state.ProjectEditReducer.projectEdit 
-
+projectEdit : state.ProjectEditReducer.projectEdit , 
+arrProjectCategory: state.ProjectCategoryReducer.arrProjectCategory
 
 })
 export default connect(mapStateToProps)(editProjectForm);

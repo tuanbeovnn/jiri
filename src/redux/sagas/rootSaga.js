@@ -22,7 +22,8 @@ yield all([
     ProjectCategory.theoDoiGetAllCategory(),
     ProjectSaga.theoDoiCreateProjectSaga(),
     ProjectSaga.theoDoiGetListProjectSaga(),
-    ProjectSaga.theoDoiUpdateProjectSaga()
+    ProjectSaga.theoDoiUpdateProjectSaga(),
+    ProjectSaga.theoDoiDeleteProjectSaga()
 ])
 
 

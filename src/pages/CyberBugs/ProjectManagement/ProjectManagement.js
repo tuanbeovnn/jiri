@@ -1,14 +1,13 @@
 import React, {useEffect, useState} from 'react'; 
 import { Table, Button, Space } from 'antd';
-import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
+import ReactHtmlParser from 'react-html-parser';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import FormEditProject from '../../../components/Form/FormEditProject/FormEditProject';
 
-
 export default function ProjectManagement(props) {
     const dispatch = useDispatch(); 
-   
+    
     //lấy dữ liệu từ reducer về component 
     const projectList = useSelector(state => state.ProjectCyberBugsReducer.projectList); 
 
@@ -99,8 +98,7 @@ export default function ProjectManagement(props) {
                onClick = {()=>{
                  const action= {
                    type: "OPEN_FORM_EDIT_PROJECT",
-                   Component : <FormEditProject/>,
-                   
+                   Component : <FormEditProject/>,                   
                  }
                  //dispatch lên reducer nội dung drawer 
                  dispatch(action); 
