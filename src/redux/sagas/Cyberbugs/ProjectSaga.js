@@ -5,8 +5,8 @@ import { DISPLAY_LOADING, HIDE_LOADING } from "../../constants/LoadingConst";
 
 import { projectService } from "../../../services/ProjectService";
 import { openNotificationWithIcon } from "../../../util/Notification/notificationCyberbugs";
+import { history } from "../../../util/history/history";
 function* createProjectSaga(action) {
-    console.log(action)
     //HIỂN THỊ LOADING
     yield put({
         type: DISPLAY_LOADING
@@ -19,9 +19,8 @@ function* createProjectSaga(action) {
         const { data, status } = yield call(() => cyberbugsService.createProjectAuthorization(action.newProject));
         //Gọi api thành công thì dispatch lên reducer thông qua put
         if (status === STATUSCODE.SUCCESS) {
-            console.log(data)
-
-           
+            console.log(status)
+            history.push('/projectmanagement');     
         }
     } catch (err) {
         console.log(err.response.data);
@@ -41,14 +40,13 @@ export function* theoDoiCreateProjectSaga() {
 //Khải - Code ngày dd/MM/yyyy
 
 function *getListProjectSaga(action) { 
-
     try {
         const {data,status} = yield call( () => cyberbugsService.getListProject());
  
         //Sau khi lấy dữ liệu từ api về thành công
-        if(status === STATUSCODE.SUCCESS) {
+        if(status == STATUSCODE.SUCCESS) {
             yield put({
-                type:'GET_LIST_PROJECT',
+                type:'GET_ALL_PROJECT_LIST',
                 projectList:data.content
             })
         }
@@ -64,21 +62,19 @@ export function* theoDoiGetListProjectSaga() {
 }
 
 function * updateProjectSaga(action){
-   
+   console.log(action.projectUpdate);
 yield put({
     type: DISPLAY_LOADING
 }); 
 
-yield delay (500);
-
+yield delay (600);
 try {
 
     //Gọi api lấy dữ liệu về
     const { data, status } = yield call(() => cyberbugsService.updateProject(action.projectUpdate));
     //Gọi api thành công thì dispatch lên reducer thông qua put
-    if (status === STATUSCODE.SUCCESS) {
+    if (status == STATUSCODE.SUCCESS) {
         console.log(data) 
-
     }
     yield put ({
         type: "GET_LIST_PROJECT_SAGA"

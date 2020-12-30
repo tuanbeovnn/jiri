@@ -1,9 +1,5 @@
 const initialState = {
-projectList : [
-    {id: "1",
-    projectName: "abc", 
-    description: "React Jira"}
-]
+projectList : []
 }
 
 const ProjectCyberBugsReducer = (state = initialState, action) => {

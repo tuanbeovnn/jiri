@@ -60,9 +60,9 @@ import { GET_ALL_PROJECT_CATEGORY_SAGA } from '../../../redux/constants/Cyberbug
                     <div className="form-group">
                         <p className="font-weight-bold">Project Category</p>
                         <select className="form-control" 
-                        value={values.categoryId} 
+                        value={values.categoryId} onChange={handleChange}
                         name="categoryId"
-                        onChange={handleChange}>
+                        >
                             {arrayProjectCategory.map((item, index)=>{
                                 return <option key={index} value={item.id}>{item.projectCategoryName}</option>
                             })}
@@ -106,7 +106,7 @@ const editProjectForm = withFormik({
         return {
             id: projectEdit?.id,
             projectName:projectEdit.projectName ,
-            categoryId: projectEdit.categoryId,
+            categoryId: projectEdit?.categoryId, 
             description: projectEdit.description
 
         }
