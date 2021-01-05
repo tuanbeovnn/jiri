@@ -1,25 +1,29 @@
-import React from 'react'
+import React from 'react';
+import ReactHtmlParser  from 'react-html-parser';
+export default function InforMain(props) {
 
-export default function InforMain() {
+    const renderMember = () => {
+       return props.members?.map((item, index) => {
+            return <div className="avatar" key = {index}>
+            <img src={item.avatar} alt="hinhAnh" />
+        </div>
+        })
+    }
+
     return (
         <>
      
-             <h3>Cyber Board</h3>
+             <h3>{props.projectName}</h3>
+                <div>
+                   <h5>{ReactHtmlParser(props.description)}</h5> 
+                </div>
                     <div className="info" style={{ display: 'flex' }}>
                         <div className="search-block">
                             <input className="search" />
                             <i className="fa fa-search" />
                         </div>
                         <div className="avatar-group" style={{ display: 'flex' }}>
-                            <div className="avatar">
-                                <img src={require("../../../assets/img/download (1).jfif")} alt="hinhAnh" />
-                            </div>
-                            <div className="avatar">
-                                <img src={require("../../../assets/img/download (2).jfif")} alt="hinhAnh" />
-                            </div>
-                            <div className="avatar">
-                                <img src={require("../../../assets/img/download (3).jfif")} alt="hinhAnh" />
-                            </div>
+                           {renderMember()}
                         </div>
                         <div style={{ marginLeft: 20 }} className="text">Only My Issues</div>
                         <div style={{ marginLeft: 20 }} className="text">Recently Updated</div>

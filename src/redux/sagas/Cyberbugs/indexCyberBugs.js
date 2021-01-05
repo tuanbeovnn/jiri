@@ -1,15 +1,30 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import ContentMain from '../../../components/CyberBugs/Main/ContentMain';
 import HeaderMain from '../../../components/CyberBugs/Main/HeaderMain';
 import InforMain from '../../../components/CyberBugs/Main/InforMain';
 import './../../../index.css';
 
-export default function indexCyberBugs() {
+export default function IndexCyberBugs(props) {
+    let {projectDetail} = useSelector(state => state.ProjectReducer); 
+
+    const dispatch = useDispatch(); 
+    useEffect(() => {
+        const projectId = props.match.params.projectId;
+        dispatch({
+            type: "GET_PROJECT_DETAIL_SAGA", 
+            id : projectId
+        })
+    }, [])
     return (
         <div className="main">
            <HeaderMain/>
-            <ContentMain/>
-            <InforMain/>
+           <InforMain members = {projectDetail.members} 
+                    projectName = {projectDetail.alias}
+                    description  = {projectDetail.description}
+                    />
+            <ContentMain projectDetail = {projectDetail}/>
+
         </div>
     )
 }

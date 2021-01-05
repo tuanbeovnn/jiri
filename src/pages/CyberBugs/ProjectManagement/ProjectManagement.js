@@ -1,17 +1,18 @@
 import React, {useEffect, useState} from 'react'; 
-import { Table, Button, Space } from 'antd';
-import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
-import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
+import { Table, Button, Space, Tag, Popconfirm, Popover, AutoComplete } from 'antd';
+import { Avatar, Image } from 'antd';
+import ReactHtmlParser from 'react-html-parser';
+import { DeleteOutlined, EditOutlined, CloseCircleOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import FormEditProject from '../../../components/Form/FormEditProject/FormEditProject';
-
-
+import { NavLink } from 'react-router-dom'; 
 export default function ProjectManagement(props) {
     const dispatch = useDispatch(); 
-   
+    
     //lấy dữ liệu từ reducer về component 
     const projectList = useSelector(state => state.ProjectCyberBugsReducer.projectList); 
-
+    const userSearch = useSelector(state => state.UserLoginCyberBugsReducer.userSearch); 
+    const [value, setValue] = useState("");
     const [state, setState] = useState({
         filteredInfo: null,
         sortedInfo: null,
@@ -65,6 +66,9 @@ export default function ProjectManagement(props) {
         title: 'projectName',
         dataIndex: 'projectName',
         key: 'projectName',
+        render: (text, record, index)=>{
+            return <NavLink key = {index} to = {`/projectdetail/${record.id}`}>{text}</NavLink>
+        },
         sorter: (item2, item1) => {
            let projectName1 = item1.projectName?.trim().toLowerCase(); 
            let projectName2 = item2.projectName?.trim().toLowerCase(); 
@@ -76,15 +80,79 @@ export default function ProjectManagement(props) {
         sortDirections: ['descend'], 
         ellipsis: true,
       },
+     
       {
-        title: 'description',
-        dataIndex: 'description',
-        key: 'description',
+        title: 'creator',
+        key: 'creator',
         render: (text, record, index) => {
-            let jsxContent = ReactHtmlParser(text); 
-            return <div key= {index}>
-                {jsxContent}
-            </div> 
+            return <Tag>{record.creator?.name}</Tag> 
+        },
+        ellipsis: true,
+      },
+      {
+        title: 'members',
+        key: 'members',
+        render: (text, record, index) => {
+            return  <div>
+            {record.members?.slice(0,3).map((item, index)=>{
+                return (
+                  <Popover key={index} placement="top" title="members" content={()=>{
+                    return <table className="table">
+                      <thead>
+                        <tr>
+                          <td>Id</td>
+                          <td>Avatar</td>
+                          <td>Name</td>
+                          <td></td>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {record.members?.map((item, index)=>{
+                          return <tr key={index}>
+                            <td>{item.userId}</td>
+                            <td> <img src={item.avatar} alt="avatar" width="30" height="30" /> </td>
+                            <td>{item.userId}</td>
+                            <td> <button className="btn btn-danger" style={{borderRadius: "50%"}} 
+                            onClick={()=> {dispatch({
+                              type: "DELETE_USER_PROJECT_API",
+                              userProject: {
+                                "projectId": record.id,
+                                "userId": item.userId
+                              }})}}> X </button> </td>
+                          </tr>
+                        })}
+                      </tbody>
+                      </table>
+
+                  }}>
+                   <Avatar src={item.avatar} key={index}/>
+                   </Popover>
+                )
+                })}
+               
+               {record.members?.length> 3?<Avatar>...</Avatar> : ""} 
+              <Popover placement="topLeft" title={"Add user"} content={()=>{return <div> <AutoComplete 
+              style={{width: "100%"}}  
+              onSearch={(value)=>{dispatch({type: "GET_USER_API", keyword: value})}}
+              options={userSearch?.map((user,index)=>{
+                return {label: user.name, value: user.userId.toString() }
+              })}
+              value={value}
+              onChange = {(value)=>{setValue(value)}}
+              onSelect={(valueSelect, option)=>{
+                setValue(option.label); 
+                dispatch({
+                  type: "ADD_USER_PROJECT_API", 
+                  userProject: {
+                    "projectId": record.id,
+                    "userId": valueSelect
+                  }
+                })
+              }}
+              /></div>}} trigger="click">
+              <Button>+</Button>
+            </Popover>
+            </div>
         },
         ellipsis: true,
       },
@@ -99,8 +167,8 @@ export default function ProjectManagement(props) {
                onClick = {()=>{
                  const action= {
                    type: "OPEN_FORM_EDIT_PROJECT",
-                   Component : <FormEditProject/>,
-                   
+                   title: "Edit Project Form", 
+                   Component : <FormEditProject/>,                   
                  }
                  //dispatch lên reducer nội dung drawer 
                  dispatch(action); 
@@ -111,7 +179,12 @@ export default function ProjectManagement(props) {
                  dispatch(actionEditProject)
                }}
                 />
-               <DeleteOutlined style={{ color: '#eb2f96' }}/>
+                 <Popconfirm
+    title="Are you sure to delete this task?"
+    onConfirm={()=>{dispatch({type: "DELETE_PROJECT_SAGA", id: record.id})}} >
+   <DeleteOutlined style={{ color: '#eb2f96' }} />
+  </Popconfirm>,
+               
             </Space>
           </div>
 

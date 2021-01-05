@@ -5,9 +5,7 @@ const initialState = {
         "creator": 0,
         "description": "string",
         "categoryId": "string"
-      }
-    }
-    
+      }}
     export const ProjectEditReducer = (state = initialState, action) => {
         switch (action.type) {
     

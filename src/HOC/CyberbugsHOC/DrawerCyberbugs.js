@@ -10,7 +10,7 @@ const DrawerCyberbugs = (props) => {
   // });
   const dispatch =  useDispatch(); 
 
-  const {visible, ComponentDrawerContent, callBackSubmit} = useSelector(state => state.DrawerCyberbugsReducer); 
+  const {visible, ComponentDrawerContent, callBackSubmit, title} = useSelector(state => state.DrawerCyberbugsReducer); 
   const showDrawer = () => {
     dispatch({
       type: "OPEN_DRAWER", 
@@ -26,7 +26,7 @@ const DrawerCyberbugs = (props) => {
     return (
         <>    
         <Drawer
-          title="Create a new account"
+          title={title}
           width={720}
           onClose={onClose}
           visible = {visible}

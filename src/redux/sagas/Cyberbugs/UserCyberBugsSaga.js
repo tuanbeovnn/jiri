@@ -6,8 +6,9 @@ import axios from 'axios';
 import {USER_SIGNIN_API, USLOGIN} from './../../constants/Cyberbugs/Cyberbugs'; 
 import { cyberbugsService } from '../../../services/CyberbugsService';
 import { DISPLAY_LOADING, HIDE_LOADING } from '../../constants/LoadingConst';
-import { TOKEN, USER_LOGIN } from '../../../util/constants/settingSystem';
+import { STATUSCODE, TOKEN, USER_LOGIN } from '../../../util/constants/settingSystem';
 import {history} from '../../../util/history/history';
+import { userService } from '../../../services/UserService';
 //Quản lý các action saga
 function * signinSaga(action){
     yield delay (1000); 
@@ -26,7 +27,7 @@ try {
         type: USLOGIN,
         userLogin: data.content
     })
-history.push("./home");
+history.push("/");
 
 } catch(err){
     console.log(err.response.data)
@@ -38,4 +39,57 @@ yield put({
 
 export function * theoDoiSignin(){
     yield takeLatest(USER_SIGNIN_API, signinSaga); 
+}
+ function * getUserSaga(action){
+     
+     try {
+        const {data, status} = yield call(()=> userService.getUser(action.keyword)); 
+
+        if(status === STATUSCODE.SUCCESS){
+
+            yield put({
+                type: "GET_USER_SEARCH", 
+                listUserSearch: data.content
+            })
+        }
+     }  catch(error){
+        console.log(error);
+     }
+ }
+export function * theoDoiGetUser(){
+    yield takeLatest("GET_USER_API", getUserSaga)
+}
+function * addUserProject(action){
+    try {
+        const {data, status} = yield call(()=> userService.assignUserProject(action.userProject)); 
+        console.log(data);
+        if(status === STATUSCODE.SUCCESS){
+           yield put ({
+            type: "GET_LIST_PROJECT_SAGA"
+        })
+        }
+     }  catch(error){
+        console.log(error);
+     }
+}
+export function * theoDoiAddUser(){
+    yield takeLatest("ADD_USER_PROJECT_API", addUserProject)
+}
+
+function * deleteUserProject(action){
+    console.log(action);
+    try {
+        const {data, status} = yield call(()=> userService.deleteUserFromProject(action.userProject)) ; 
+        console.log(data);
+        if(status === STATUSCODE.SUCCESS){
+           yield put ({
+            type: "GET_LIST_PROJECT_SAGA"
+        })
+        }
+     }  catch(error){
+        console.log(error.response.data);
+     }
+}
+export function * theoDoiDeleteUserProject(){
+    yield takeLatest("DELETE_USER_PROJECT_API", deleteUserProject)
 }
