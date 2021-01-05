@@ -5,7 +5,7 @@ export class ProjectService extends BaseService{
     deleteProject = (id) => {
        return this.delete(`Project/deleteProject?projectId=${id}`)
     }
-    getProject = () => {
+    getAllProject = () => {
         return this.get(`Project/getAllProject`)
      }
     updateProject = (model) => {
@@ -17,6 +17,7 @@ export class ProjectService extends BaseService{
    getProjectDetail = (id) => {
        return this.get(`Project/getProjectDetail?id=${id}`)
    }
+
 
 }
 export const projectService = new ProjectService()

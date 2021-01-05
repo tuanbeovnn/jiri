@@ -2,11 +2,10 @@ import { Editor } from '@tinymce/tinymce-react'
 import React, { useEffect, useState } from 'react'
 import { Select, Radio,Slider } from 'antd';
 import {useSelector,useDispatch} from 'react-redux'
+import { GET_ALL_PRIORITY_LIST_SAGA, GET_ALL_PROJECT_SAGA, GET_ALL_TYPE_TASK_SAGA } from '../../../redux/constants/Cyberbugs/Cyberbugs';
 // import { GET_ALL_PROJECT_SAGA } from '../../../redux/constants/Cyberbugs/ProjectCyberBugsConstants';
 // import { GET_ALL_TASK_TYPE_SAGA } from '../../../redux/constants/Cyberbugs/TaskTypeConstants';
 // import { GET_ALL_PRIORITY_SAGA } from '../../../redux/constants/Cyberbugs/PriorityConstants';
-
-
 
 const { Option } = Select;
 
@@ -18,9 +17,11 @@ for (let i = 10; i < 36; i++) {
 export default function FormCreateTask(props) {
 
     //Lấy dữ liệu từ redux 
-    // const {arrProject} = useSelector(state=>state.ProjectCyberBugsReducer);
-    // const {arrTaskType} = useSelector(state=>state.TaskTypeReducer);
-    // const {arrPriority} = useSelector(state => state.PriorityReducer);
+     const {arrProject} = useSelector(state=>state.ProjectCyberBugsReducer);
+   
+     const {arrTaskType} = useSelector(state=>state.TaskTypeReducer);
+     const {arrPriority} = useSelector(state => state.PriorityReducer);
+    
      const dispatch = useDispatch();
     const [size, setSize] = React.useState('default');
 
@@ -30,9 +31,9 @@ export default function FormCreateTask(props) {
     });
     //hook
     useEffect(() => {
-        // dispatch({type:GET_ALL_PROJECT_SAGA});
-        // dispatch({type:GET_ALL_TASK_TYPE_SAGA});
-        // dispatch({type:GET_ALL_PRIORITY_SAGA});
+        dispatch({type:GET_ALL_PROJECT_SAGA});
+        dispatch({type:GET_ALL_TYPE_TASK_SAGA});
+         dispatch({type:GET_ALL_PRIORITY_LIST_SAGA});
     },[])
 
     const handleEditorChange = (content, editor) => {
@@ -48,31 +49,31 @@ export default function FormCreateTask(props) {
         <div className="container">          
             <div className="form-group">
                 <p>Project</p>
-                {/* <select name="projectId" className="form-control">
+                <select name="projectId" className="form-control">
                    {arrProject.map((project,index)=>{
                        return <option key={index} value={project.id}>{project.projectName}</option>
                    })}
-                </select> */}
+                </select>
             </div>
             <div className="form-group">
                 <div className="row">
                     <div className="col-6">
                         <p>Priority</p>
-                        {/* <select name="priorityId" className="form-control">
+                        <select name="priorityId" className="form-control">
                             {arrPriority.map((priority,index)=>{
                                 return <option key={index} value={priority.priorityId}>
                                     {priority.priority}
                                 </option>
                             })}
-                        </select> */}
+                        </select>
                     </div>
                     <div className="col-6">
                         <p>Task type</p>
-                        {/* <select className="form-control" name="typeId">
+                        <select className="form-control" name="typeId">
                             {arrTaskType.map((taskType,index)=>{
                                 return <option key={index} value={taskType.id}>{taskType.taskType}</option>
                             })}
-                        </select> */}
+                        </select>
                     </div>
                 </div>
                 
@@ -85,7 +86,7 @@ export default function FormCreateTask(props) {
                             
                             mode="multiple"
                             size={size}
-                            options={[{value:'a12',label:'b12'},{value:'a12',label:'b12'},{value:'a12',label:'b12'}]}
+                            options={[{value:'a12',label:'b12'},{value:'a12',label:'b12'}]}
                             placeholder="Please select"
                             defaultValue={['a10', 'c12']}
                             onChange={handleChange}
@@ -99,11 +100,9 @@ export default function FormCreateTask(props) {
                             <input type="number" min="0" name="originalEstimate" defaultValue="0" className="form-control" height="30"/>
                         </div>
                     </div>
-
                     </div>
                     <div className="col-6">
                          <p>Time tracking</p>
-
                         <Slider defaultValue={30} value={timeTracking.timeTrackingSpent} max={Number(timeTracking.timeTrackingSpent) + Number(timeTracking.timeTrackingRemaining)} />
                         <div className="row">
                             <div className="col-6 text-left font-weight-bold">{timeTracking.timeTrackingSpent}h logged</div>

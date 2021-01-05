@@ -6,6 +6,8 @@ import * as Cyberbugs from './Cyberbugs/UserCyberBugsSaga';
 import {theoDoiActionGetTaskApi, theoDoiActionAddTaskApiAction, theoDoiActionDeleteTaskApiAction, theoDoiActionRejectTaskApiAction, theoDoiActionCheckTaskApiAction} from './ToDoListSaga';
 import * as ProjectCategory from './Cyberbugs/ProjectCategorySaga'; 
 import * as ProjectSaga from './Cyberbugs/ProjectSaga'; 
+import * as TaskTypeSaga from './Cyberbugs/TaskTypeSaga'; 
+import * as PrioritySaga from './Cyberbugs/PrioritySaga'; 
 export function * rootSaga(){
 //    yield fork(getTaskAPI);  
 
@@ -25,9 +27,12 @@ yield all([
     ProjectSaga.theoDoiUpdateProjectSaga(),
     ProjectSaga.theoDoiDeleteProjectSaga(), 
     ProjectSaga.theoDoiGetProjectDetailSaga(),
+    ProjectSaga.theoDoiGetAllProjectSaga(), 
     Cyberbugs.theoDoiGetUser(),
     Cyberbugs.theoDoiAddUser(),
-    Cyberbugs.theoDoiDeleteUserProject()
+    Cyberbugs.theoDoiDeleteUserProject(),
+    TaskTypeSaga.theoDoiGetAllTypeTaskSaga(),
+    PrioritySaga.theoDoiGetAllPriorityList()
 ])
 
 

@@ -6,6 +6,7 @@ import { DISPLAY_LOADING, HIDE_LOADING } from "../../constants/LoadingConst";
 import { projectService } from "../../../services/ProjectService";
 import { openNotificationWithIcon } from "../../../util/Notification/notificationCyberbugs";
 import { history } from "../../../util/history/history";
+import { GET_ALL_PROJECT_SAGA } from "../../constants/Cyberbugs/Cyberbugs";
 function* createProjectSaga(action) {
     //HIỂN THỊ LOADING
     yield put({
@@ -73,9 +74,7 @@ try {
     //Gọi api lấy dữ liệu về
     const { data, status } = yield call(() => cyberbugsService.updateProject(action.projectUpdate));
     //Gọi api thành công thì dispatch lên reducer thông qua put
-    if (status == STATUSCODE.SUCCESS) {
-        console.log(data) 
-    }
+  
     yield put ({
         type: "GET_LIST_PROJECT_SAGA"
     })
@@ -155,6 +154,37 @@ function * getProjectDetailSaga (action){
 export function* theoDoiGetProjectDetailSaga(){
     yield takeLatest("GET_PROJECT_DETAIL_SAGA", getProjectDetailSaga); 
 }
+
+function * getAllProjectSaga (action){
+    yield put({
+        type: DISPLAY_LOADING
+    }); 
+    
+    yield delay (500);  
+    try {     
+        //Gọi api lấy dữ liệu về
+        const { status , data} = yield call(() => projectService.getAllProject()); 
+        //Gọi api thành công thì dispatch lên reducer thông qua put
+        if (status === STATUSCODE.SUCCESS) {  
+            
+            yield put ({
+                type: "GET_ALL_PROJECT_DROPDOWN_LIST", 
+                arrProject : data.content
+            })
+           
+        }
+      
+    } catch (err) {
+        console.log(err.response.data);
+    } 
+    yield put({
+        type: HIDE_LOADING
+    })
+}
+export function* theoDoiGetAllProjectSaga(){
+    yield takeLatest(GET_ALL_PROJECT_SAGA, getAllProjectSaga); 
+}
+
 
 
 
