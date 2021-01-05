@@ -44,7 +44,9 @@ export function * theoDoiSignin(){
      
      try {
         const {data, status} = yield call(()=> userService.getUser(action.keyword)); 
+
         if(status === STATUSCODE.SUCCESS){
+
             yield put({
                 type: "GET_USER_SEARCH", 
                 listUserSearch: data.content

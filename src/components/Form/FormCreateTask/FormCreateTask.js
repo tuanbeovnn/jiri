@@ -3,9 +3,6 @@ import React, { useEffect, useState } from 'react'
 import { Select, Radio,Slider } from 'antd';
 import {useSelector,useDispatch} from 'react-redux'
 import { GET_ALL_PRIORITY_LIST_SAGA, GET_ALL_PROJECT_SAGA, GET_ALL_TYPE_TASK_SAGA } from '../../../redux/constants/Cyberbugs/Cyberbugs';
-// import { GET_ALL_PROJECT_SAGA } from '../../../redux/constants/Cyberbugs/ProjectCyberBugsConstants';
-// import { GET_ALL_TASK_TYPE_SAGA } from '../../../redux/constants/Cyberbugs/TaskTypeConstants';
-// import { GET_ALL_PRIORITY_SAGA } from '../../../redux/constants/Cyberbugs/PriorityConstants';
 
 const { Option } = Select;
 
@@ -21,7 +18,11 @@ export default function FormCreateTask(props) {
    
      const {arrTaskType} = useSelector(state=>state.TaskTypeReducer);
      const {arrPriority} = useSelector(state => state.PriorityReducer);
-    
+     const {userSearch} = useSelector(state => state.UserLoginCyberBugsReducer);
+     const userSearchOption = userSearch.map((user, index) => {
+         return {value : user.userId , label: user.name}
+     })
+     console.log(userSearch);
      const dispatch = useDispatch();
     const [size, setSize] = React.useState('default');
 
@@ -34,6 +35,7 @@ export default function FormCreateTask(props) {
         dispatch({type:GET_ALL_PROJECT_SAGA});
         dispatch({type:GET_ALL_TYPE_TASK_SAGA});
          dispatch({type:GET_ALL_PRIORITY_LIST_SAGA});
+         dispatch({type: "GET_USER_API", keyword: ''})
     },[])
 
     const handleEditorChange = (content, editor) => {
@@ -86,10 +88,13 @@ export default function FormCreateTask(props) {
                             
                             mode="multiple"
                             size={size}
-                            options={[{value:'a12',label:'b12'},{value:'a12',label:'b12'}]}
+                            options={userSearchOption}
                             placeholder="Please select"
-                            defaultValue={['a10', 'c12']}
+                            defaultValue={['a10']}
                             onChange={handleChange}
+                            onSearch = {(value) => {console.log(value)}}
+                            optionFilterProp="label"
+                            onSelect = {(value) => {console.log(value)}}
                             style={{ width: '100%' }}
                         > {children}
                
