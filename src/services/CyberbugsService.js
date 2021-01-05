@@ -38,7 +38,6 @@ export const cyberbugsService = {
             //TOKEN YÊU CẦU TỪ BACKEND CHỨNG MINH USER ĐÃ ĐĂNG NHẬP RỒI 
         })
     },
-
     updateProject: (projectUpdate) => {
         return Axios({
             url: `${DOMAIN_CYBERBUG}/Project/updateProject?projectId=${projectUpdate.id}`, 
@@ -46,7 +45,9 @@ export const cyberbugsService = {
             data: projectUpdate, 
             headers: {'Authorization': 'Bearer ' + localStorage.getItem(TOKEN)} //token yêu cầu từ backend chứng minh user đã đăng nhập rồi
         })
-    }
+    }, 
+
+
 }
 
 

@@ -27,7 +27,7 @@ try {
         type: USLOGIN,
         userLogin: data.content
     })
-history.push("./home");
+history.push("/");
 
 } catch(err){
     console.log(err.response.data)

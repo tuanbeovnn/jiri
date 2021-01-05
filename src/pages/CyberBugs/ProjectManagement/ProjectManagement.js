@@ -5,7 +5,7 @@ import ReactHtmlParser from 'react-html-parser';
 import { DeleteOutlined, EditOutlined, CloseCircleOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import FormEditProject from '../../../components/Form/FormEditProject/FormEditProject';
-
+import { NavLink } from 'react-router-dom'; 
 export default function ProjectManagement(props) {
     const dispatch = useDispatch(); 
     
@@ -66,6 +66,9 @@ export default function ProjectManagement(props) {
         title: 'projectName',
         dataIndex: 'projectName',
         key: 'projectName',
+        render: (text, record, index)=>{
+            return <NavLink key = {index} to = {`/projectdetail/${record.id}`}>{text}</NavLink>
+        },
         sorter: (item2, item1) => {
            let projectName1 = item1.projectName?.trim().toLowerCase(); 
            let projectName2 = item2.projectName?.trim().toLowerCase(); 
@@ -164,6 +167,7 @@ export default function ProjectManagement(props) {
                onClick = {()=>{
                  const action= {
                    type: "OPEN_FORM_EDIT_PROJECT",
+                   title: "Edit Project Form", 
                    Component : <FormEditProject/>,                   
                  }
                  //dispatch lên reducer nội dung drawer 

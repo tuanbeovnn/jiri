@@ -19,11 +19,11 @@ import HomeTemplate from './templates/HomeTemplate/HomeTemplate';
 import UserLoginTemplate from './templates/HomeTemplate/UserLoginTemplate'; 
 import LoginCyberBugs from './pages/CyberBugs/LoginCyberBug/LoginCyberBugs';
 import {history} from './util/history/history'; 
-import indexCyberBugs from './redux/sagas/Cyberbugs/indexCyberBugs';
 import CyberbugsTemplate from './templates/HomeTemplate/CyberbugsTemplate';
 import CreateProject from './pages/CyberBugs/CreateProject/CreateProject';
 import ProjectManagement from './pages/CyberBugs/ProjectManagement/ProjectManagement';
 import DrawerCyberbugs from './HOC/CyberbugsHOC/DrawerCyberbugs';
+import IndexCyberBugs from './redux/sagas/Cyberbugs/IndexCyberBugs';
 
 export default class App extends Component {
   render() {
@@ -42,7 +42,7 @@ export default class App extends Component {
         <HomeTemplate path="/home" exact Component = {Home}/>
         <HomeTemplate exact  path="/contact" Component={Contact} />
         <HomeTemplate exact  path="/about" Component={About} />
-        <HomeTemplate exact path="/"  Component={Home} />
+        <CyberbugsTemplate exact path="/"  Component={ProjectManagement} />
         <UserLoginTemplate exact path="/login"  Component={LoginCyberBugs} />
         <HomeTemplate exact path="/detail/:id"  Component={Detail} />
         <HomeTemplate exact path="/profile"  Component={Profile} />
@@ -51,9 +51,10 @@ export default class App extends Component {
         <HomeTemplate  exact path="/todolistredux"  Component={ToDoListRedux} />
         <HomeTemplate  exact path="/todolistsaga"  Component={BaiTapToDoListSaga} />     
         <HomeTemplate  exact path="/demohocmodal"  Component={DemoHOCModal} />   
-        <CyberbugsTemplate exact path = "/cyberbugs" Component = {indexCyberBugs}/>
+        <CyberbugsTemplate exact path = "/cyberbugs" Component = {IndexCyberBugs}/>
         <CyberbugsTemplate exact path = "/createproject" Component = {CreateProject}/>
         <CyberbugsTemplate exact path = "/projectmanagement" Component = {ProjectManagement}/>
+        <CyberbugsTemplate exact path = "/projectdetail/:projectId" Component = {IndexCyberBugs}/>
         <Route  path="*"  Component={PageNotFound} />      
       </Switch>
 

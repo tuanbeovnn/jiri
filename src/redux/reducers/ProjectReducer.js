@@ -4,7 +4,10 @@ const initialState = {
         "projectName": "string",
         "description": "string",
         "categoryId": "string"
-}
+},
+    projectDetail : {
+
+    }
     }
 
 const ProjectReducer = (state = initialState, action) => {
@@ -14,7 +17,10 @@ const ProjectReducer = (state = initialState, action) => {
       
         state.projectEdit = action.projectEditDrawer; 
         return { ...state }
-
+    case "PUT_PROJECT_DETAIL": 
+    state.projectDetail = action.projectDetail; 
+    
+    return { ...state }
     default:
         return state
     }

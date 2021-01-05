@@ -14,7 +14,9 @@ export class ProjectService extends BaseService{
     createProject = (model) => {
         return this.post("Project/createProject", model)
     }
-   
+   getProjectDetail = (id) => {
+       return this.get(`Project/getProjectDetail?id=${id}`)
+   }
 
 }
 export const projectService = new ProjectService()

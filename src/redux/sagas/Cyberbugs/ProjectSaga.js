@@ -126,3 +126,35 @@ export function* theoDoiDeleteProjectSaga(){
     yield takeLatest("DELETE_PROJECT_SAGA", deleteProjectSaga); 
 }
 
+function * getProjectDetailSaga (action){
+    yield put({
+        type: DISPLAY_LOADING
+    }); 
+    
+    yield delay (500);  
+    try {     
+        //Gọi api lấy dữ liệu về
+        const { status , data} = yield call(() => projectService.getProjectDetail(action.id)); 
+        //Gọi api thành công thì dispatch lên reducer thông qua put
+        if (status === STATUSCODE.SUCCESS) {
+            openNotificationWithIcon('success', 'Get Project Detail', 'Lấy Dự Án Thành Công !!')
+            yield put ({
+                type: "PUT_PROJECT_DETAIL", 
+                projectDetail : data.content
+            })
+        }
+      
+    } catch (err) {
+        openNotificationWithIcon('error', 'Error', 'Xảy ra lỗi khi cập nhật !!')
+        console.log(err.response.data);
+    } 
+    yield put({
+        type: HIDE_LOADING
+    })
+}
+export function* theoDoiGetProjectDetailSaga(){
+    yield takeLatest("GET_PROJECT_DETAIL_SAGA", getProjectDetailSaga); 
+}
+
+
+

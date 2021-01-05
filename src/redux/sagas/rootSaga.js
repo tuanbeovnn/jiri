@@ -24,6 +24,7 @@ yield all([
     ProjectSaga.theoDoiGetListProjectSaga(),
     ProjectSaga.theoDoiUpdateProjectSaga(),
     ProjectSaga.theoDoiDeleteProjectSaga(), 
+    ProjectSaga.theoDoiGetProjectDetailSaga(),
     Cyberbugs.theoDoiGetUser(),
     Cyberbugs.theoDoiAddUser(),
     Cyberbugs.theoDoiDeleteUserProject()
