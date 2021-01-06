@@ -8,8 +8,6 @@ import { GET_ALL_PROJECT_CATEGORY_SAGA } from '../../../redux/constants/Cyberbug
 
 
  function FormEditProject(props) {
-
-
     const {
         values,
         touched,

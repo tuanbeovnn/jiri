@@ -3,7 +3,7 @@ import { takeEvery } from 'redux-saga/effects';
 import {push} from 'react-router-redux'; 
 import { fork, take, call, takeLatest, put, delay } from 'redux-saga/effects';
 import axios from 'axios';
-import {USER_SIGNIN_API, USLOGIN} from './../../constants/Cyberbugs/Cyberbugs'; 
+import {GET_USER_BY_PROJECT_ID_SAGA, USER_SIGNIN_API, USLOGIN} from './../../constants/Cyberbugs/Cyberbugs'; 
 import { cyberbugsService } from '../../../services/CyberbugsService';
 import { DISPLAY_LOADING, HIDE_LOADING } from '../../constants/LoadingConst';
 import { STATUSCODE, TOKEN, USER_LOGIN } from '../../../util/constants/settingSystem';
@@ -92,4 +92,23 @@ function * deleteUserProject(action){
 }
 export function * theoDoiDeleteUserProject(){
     yield takeLatest("DELETE_USER_PROJECT_API", deleteUserProject)
+}
+function * getUserByProjectID(action){
+    console.log(action);
+    try {
+        const {data, status} = yield call(()=> userService.getUserByProjectId(action.idProject)) ; 
+        console.log(data);
+        console.log(status)
+        if(status === STATUSCODE.SUCCESS){
+           yield put ({
+            type: "GET_USER_BY_PROJECT_ID", 
+            arrUser : data.content
+        })
+        }
+     }  catch(error){
+        console.log(error.response.data);
+     }
+}
+export function * theoDoiGetUserByProjectId(){
+    yield takeLatest(GET_USER_BY_PROJECT_ID_SAGA, getUserByProjectID)
 }

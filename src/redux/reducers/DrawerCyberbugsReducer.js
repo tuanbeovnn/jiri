@@ -23,6 +23,9 @@ const initialState = {
     case "SET_SUBMIT_EDIT_PROJECT": 
         state.callBackSubmit = action.submitFunction;
         return {...state}
+    case "SET_SUBMIT_CREATE_PROJECT": 
+        state.callBackSubmit = action.submitFunction;
+        return {...state}
 
     default:
         return state
