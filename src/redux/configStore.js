@@ -13,6 +13,7 @@ import { ProjectEditReducer } from "./reducers/ProjectEditReducer";
 import ProjectReducer from "./reducers/ProjectReducer";
 import TaskTypeReducer from "./reducers/TaskTypeReducer";
 import PriorityReducer from "./reducers/PriorityReducer";
+import StatusReducer from "./reducers/StatusReducer";
 
 
 const middleWareSaga = createMiddleWareSaga(); 
@@ -29,7 +30,8 @@ const rootReducer = combineReducers({
     ProjectEditReducer, 
     ProjectReducer,
     TaskTypeReducer, 
-    PriorityReducer 
+    PriorityReducer ,
+    StatusReducer 
 
 }); 
 
