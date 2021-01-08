@@ -6,6 +6,7 @@ import { DeleteOutlined, EditOutlined, CloseCircleOutlined } from '@ant-design/i
 import { useDispatch, useSelector } from 'react-redux';
 import FormEditProject from '../../../components/Form/FormEditProject/FormEditProject';
 import { NavLink } from 'react-router-dom'; 
+import { ADD_USER_PROJECT_API, DELETE_PROJECT_SAGA, DELETE_USER_PROJECT_API, EDIT_PROJECT_SAGA_DRAWER, GET_LIST_PROJECT_SAGA, GET_USER_API, OPEN_FORM_EDIT_PROJECT } from '../../../redux/constants/Cyberbugs/Cyberbugs';
 export default function ProjectManagement(props) {
     const dispatch = useDispatch(); 
     
@@ -19,7 +20,7 @@ export default function ProjectManagement(props) {
     });
     useEffect(()=>{
         dispatch({
-            type: "GET_LIST_PROJECT_SAGA"
+            type: GET_LIST_PROJECT_SAGA
         }, [])
     })
    const handleChange = (pagination, filters, sorter) => {
@@ -114,7 +115,7 @@ export default function ProjectManagement(props) {
                             <td>{item.userId}</td>
                             <td> <button className="btn btn-danger" style={{borderRadius: "50%"}} 
                             onClick={()=> {dispatch({
-                              type: "DELETE_USER_PROJECT_API",
+                              type: DELETE_USER_PROJECT_API,
                               userProject: {
                                 "projectId": record.id,
                                 "userId": item.userId
@@ -133,7 +134,7 @@ export default function ProjectManagement(props) {
                {record.members?.length> 3?<Avatar>...</Avatar> : ""} 
               <Popover placement="topLeft" title={"Add user"} content={()=>{return <div> <AutoComplete 
               style={{width: "100%"}}  
-              onSearch={(value)=>{dispatch({type: "GET_USER_API", keyword: value})}}
+              onSearch={(value)=>{dispatch({type: GET_USER_API, keyword: value})}}
               options={userSearch?.map((user,index)=>{
                 return {label: user.name, value: user.userId.toString() }
               })}
@@ -142,7 +143,7 @@ export default function ProjectManagement(props) {
               onSelect={(valueSelect, option)=>{
                 setValue(option.label); 
                 dispatch({
-                  type: "ADD_USER_PROJECT_API", 
+                  type: ADD_USER_PROJECT_API, 
                   userProject: {
                     "projectId": record.id,
                     "userId": valueSelect
@@ -166,14 +167,14 @@ export default function ProjectManagement(props) {
                <EditOutlined style={{ color: '#08c' }}
                onClick = {()=>{
                  const action= {
-                   type: "OPEN_FORM_EDIT_PROJECT",
+                   type: OPEN_FORM_EDIT_PROJECT,
                    title: "Edit Project Form", 
                    Component : <FormEditProject/>,                   
                  }
                  //dispatch lên reducer nội dung drawer 
                  dispatch(action); 
                  const actionEditProject = {
-                   type: "EDIT_PROJECT_SAGA_DRAWER", 
+                   type: EDIT_PROJECT_SAGA_DRAWER, 
                    projectEditModal: record 
                  }
                  dispatch(actionEditProject)
@@ -181,7 +182,7 @@ export default function ProjectManagement(props) {
                 />
                  <Popconfirm
     title="Are you sure to delete this task?"
-    onConfirm={()=>{dispatch({type: "DELETE_PROJECT_SAGA", id: record.id})}} >
+    onConfirm={()=>{dispatch({type: DELETE_PROJECT_SAGA, id: record.id})}} >
    <DeleteOutlined style={{ color: '#eb2f96' }} />
   </Popconfirm>,
                

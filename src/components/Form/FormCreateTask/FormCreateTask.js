@@ -160,7 +160,9 @@ for (let i = 10; i < 36; i++) {
                          <p>Time tracking</p>
                         <Slider defaultValue={30} 
                         name = "timeTracking"
-                        value={timeTracking.timeTrackingSpent} max={Number(timeTracking.timeTrackingSpent) + Number(timeTracking.timeTrackingRemaining)}/>
+                        value={timeTracking.timeTrackingSpent}
+                         max={Number(timeTracking.timeTrackingSpent) + Number(timeTracking.timeTrackingRemaining)}
+                        />
                         <div className="row">
                             <div className="col-6 text-left font-weight-bold">{timeTracking.timeTrackingSpent}h logged</div>
                             <div className="col-6 text-right font-weight-bold">{timeTracking.timeTrackingRemaining}h remaining</div>
@@ -228,6 +230,14 @@ const createTaskForm = withFormik({
     enableReinitialize: true,
     mapPropsToValues: (props) => {
         let {arrProject,arrStatus, arrTaskType, arrPriority} = props; 
+
+        if(arrProject.length > 0) {
+            console.log(arrProject[0]?.id);
+            props.dispatch({
+                type: GET_USER_BY_PROJECT_ID_SAGA, 
+                idProject : arrProject[0]?.id
+            })
+        }
         return {
             taskName: '',
             description: '',

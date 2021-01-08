@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Drawer, Form, Button, Col, Row, Input, Select, DatePicker } from 'antd';
 import DrawerCyberbugsReducer from '../../redux/reducers/DrawerCyberbugsReducer';
 import { useDispatch, useSelector } from 'react-redux';
+import { CLOSE_DRAWER, OPEN_DRAWER } from '../../redux/constants/Cyberbugs/Cyberbugs';
 
 
 const DrawerCyberbugs = (props) => {
@@ -13,13 +14,13 @@ const DrawerCyberbugs = (props) => {
   const {visible, ComponentDrawerContent, callBackSubmit, title} = useSelector(state => state.DrawerCyberbugsReducer); 
   const showDrawer = () => {
     dispatch({
-      type: "OPEN_DRAWER", 
+      type: OPEN_DRAWER, 
     })
   };
  
   const  onClose = () => {
     dispatch({
-      type: "CLOSE_DRAWER"
+      type: CLOSE_DRAWER
     })
   };
 
