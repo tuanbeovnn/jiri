@@ -19,7 +19,7 @@ import CyberbugsTemplate from './templates/HomeTemplate/CyberbugsTemplate';
 import CreateProject from './pages/CyberBugs/CreateProject/CreateProject';
 import ProjectManagement from './pages/CyberBugs/ProjectManagement/ProjectManagement';
 import DrawerCyberbugs from './HOC/CyberbugsHOC/DrawerCyberbugs';
-import IndexCyberBugs from './redux/sagas/Cyberbugs/IndexCyberBugs';
+import IndexCyberBugs from './redux/sagas/Cyberbugs/indexCyberBugs';
 
 export default class App extends Component {
   render() {
