@@ -1,5 +1,5 @@
 import { USER_LOGIN } from "../../util/constants/settingSystem";
-import { USLOGIN } from "../constants/Cyberbugs/Cyberbugs";
+import { GET_USER_BY_PROJECT_ID, GET_USER_SEARCH, USLOGIN } from "../constants/Cyberbugs/Cyberbugs";
 
 let usLogin = {};
 
@@ -18,11 +18,11 @@ const stateDefault = {
         state.userLogin = action.userLogin;
         return {...state}
 
-        case "GET_USER_SEARCH": 
+        case GET_USER_SEARCH: 
         state.userSearch = action.listUserSearch; 
         return {...state}
 
-        case "GET_USER_BY_PROJECT_ID" : 
+        case GET_USER_BY_PROJECT_ID : 
         state.arrUser = action.arrUser; 
         return {...state}
         default: return {...state}

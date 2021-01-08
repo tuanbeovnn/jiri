@@ -3,8 +3,6 @@ import { BrowserRouter, Route, Switch,Router } from 'react-router-dom';
 import Home from './pages/Home/Home';
 import Contact from './pages/Contact/Contact';
 import About from './pages/About/About';
-import Header from './components/Home/Header/Header'
-import Login from './pages/Login/Login'; 
 import Detail from './pages/Detail/Detail'; 
 import PageNotFound from './pages/NotFound/PageNotFound'; 
 import Profile from './pages/Profile/Profile'; 
@@ -12,9 +10,7 @@ import Todolist from './pages/Todolist/Todolist';
 import TodolistRFC from './pages/Todolist/TodolistRFC'; 
 import ToDoListRedux from './pages/Todolist/ToDoListRedux'; 
 import BaiTapToDoListSaga from './pages/BaiTapToDoListSaga/BaiTapToDoListSaga'; 
-import Loading from './components/GlobalSetting/Loading'; 
-import DemoHOCModal from './pages/DemoHOCModal/DemoHOCModal'; 
-import Modal from './HOC/Modal/Modal'; 
+import Loading from './components/GlobalSetting/Loading';  
 import HomeTemplate from './templates/HomeTemplate/HomeTemplate';
 import UserLoginTemplate from './templates/HomeTemplate/UserLoginTemplate'; 
 import LoginCyberBugs from './pages/CyberBugs/LoginCyberBug/LoginCyberBugs';
@@ -33,12 +29,7 @@ export default class App extends Component {
       {/* <Modal/> */}
       <Loading/>
       <Switch>
-        {/* <Route exact path="/home"  render={(propsRoute)=>{
-          return <div>
-                 <Header/>
-                 <Home {...propsRoute}/> 
-          </div>
-        }}/> */}
+      
         <HomeTemplate path="/home" exact Component = {Home}/>
         <HomeTemplate exact  path="/contact" Component={Contact} />
         <HomeTemplate exact  path="/about" Component={About} />
@@ -49,8 +40,7 @@ export default class App extends Component {
         <HomeTemplate  exact path="/todolistrcc"  Component={Todolist} />
         <HomeTemplate  exact path="/todolistrfc"  Component={TodolistRFC} />
         <HomeTemplate  exact path="/todolistredux"  Component={ToDoListRedux} />
-        <HomeTemplate  exact path="/todolistsaga"  Component={BaiTapToDoListSaga} />     
-        <HomeTemplate  exact path="/demohocmodal"  Component={DemoHOCModal} />   
+        <HomeTemplate  exact path="/todolistsaga"  Component={BaiTapToDoListSaga} />      
         <CyberbugsTemplate exact path = "/cyberbugs" Component = {IndexCyberBugs}/>
         <CyberbugsTemplate exact path = "/createproject" Component = {CreateProject}/>
         <CyberbugsTemplate exact path = "/projectmanagement" Component = {ProjectManagement}/>

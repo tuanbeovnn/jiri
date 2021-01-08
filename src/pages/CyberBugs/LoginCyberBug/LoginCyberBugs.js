@@ -51,15 +51,10 @@ const LoginCyberBugsWithFormik = withFormik({
     validationSchema: Yup.object().shape({
         email: Yup.string().required("Email is required").email("Email is not valid"),
         password: Yup.string().min(6, "password must be from 6 - 32 char").max(32, "password must be from 6 - 32 char")
-    }), 
-    handleChange: e => {
-        console.log(e.values);
-    }, 
+    }),  
     handleSubmit: ({email, password}, {props,  setSubmitting }) => {       
         props.dispatch(siginCyberbugsAction(email,password, props.history )); 
     },
-  
-    displayName: 'Login CyberBugs',
   })(LoginCyberBugs); 
 
   export default connect() (LoginCyberBugsWithFormik); 
